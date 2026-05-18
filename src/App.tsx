@@ -1,11 +1,9 @@
 import { useState } from 'react'
 import './App.css'
 import TaskInput from './components/TaskInput';
+import Calendar from './components/Calendar';
 
 function App() {
-    const [currentTask, setCurrentTask] = useState<string>('');
-    const [currentDate, setCurrentDate] = useState<string>('');
-    const [currentTime, setCurrentTime] = useState<number>(0);
     const [tasks, setTasks] = useState([
         {
             id: 'pn00la8- 1778687953108',
@@ -17,19 +15,29 @@ function App() {
 
     return (
         <>
-            <h1>Trackerlee</h1>
+            <main className="h-full lg:grid lg:grid-cols-12" role="main">
+                <aside className="lg:col-span-2 bg-green-500 p-5" role="contentinfo">
+                    <h1 className="text-2xl text-white">Tracker<span className="font-bold">lee</span></h1>
+                </aside>
 
-            <TaskInput currentTask={currentTask} currentDate={currentDate} currentTime={currentTime} setCurrentTask={setCurrentTask} setCurrentDate={setCurrentDate} setCurrentTime={setCurrentTime} tasks={tasks} setTasks={setTasks} />
+                <div className="lg:col-span-10 w-full p-5">
+                    <header>
+                        <TaskInput tasks={tasks} setTasks={setTasks} />
+                    </header>
 
-            <ul>
-                {tasks?.map((task) => {
-                    return (
-                        <li key={task.id}>
-                            {task.title} / {task.date} / {task.time} <button>Edit</button>
-                        </li>
-                    )
-                })}
-            </ul>
+                    <ul>
+                        {tasks?.map((task: { id: string; title: string; date: string; time: number }) => {
+                            return (
+                                <li key={task.id}>
+                                    {task.title} / {task.date} / {task.time} <button>Edit</button>
+                                </li>
+                            )
+                        })}
+                    </ul>
+
+                    {/* <Calendar /> */}
+                </div>
+            </main>
         </>
     )
 }

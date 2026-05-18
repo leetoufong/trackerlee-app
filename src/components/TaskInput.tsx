@@ -1,7 +1,10 @@
-import { useRef } from 'react';
+import { useState, useRef } from 'react';
 
 const TaskInput = (props: any) => {
-    const { currentTask, currentDate, currentTime, setCurrentTask, setCurrentDate, setCurrentTime, tasks, setTasks } = props;
+    const {tasks, setTasks} = props;
+    const [currentTask, setCurrentTask] = useState<string>('');
+    const [currentDate, setCurrentDate] = useState<string>('');
+    const [currentTime, setCurrentTime] = useState<number>(0);
     const formRef = useRef<HTMLFormElement>(null);
 
     const handleSettingTasks = (event: FormDataEvent) => {
@@ -41,19 +44,17 @@ const TaskInput = (props: any) => {
         <form action="POST" onSubmit={handleSettingTasks} ref={formRef}>
             <div>
                 <label htmlFor="title">Task Title:</label>
-                <input type="text" id="title" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
+                <input type="text" id="title" className="border p-2 rounded" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
             </div>
             <div>
                 <label htmlFor="date">Date Worked:</label>
-                <input type="date" id="date" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
+                <input type="date" id="date" className="border p-2 rounded" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
             </div>
             <div>
                 <label htmlFor="time">Amount Worked:</label>
-                <input type="text" id="time" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
+                <input type="text" id="time" className="border p-2 rounded" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
             </div>
-            <div>
-                <button type="submit">Submit</button>
-            </div>
+            <button className="bg-green-500 text-white p-2 rounded font-bold" type="submit">Submit</button>
         </form>
     )
 }
