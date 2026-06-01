@@ -1,10 +1,18 @@
 import { useState } from 'react'
 import './App.css'
 import TaskInput from './components/TaskInput';
+import TaskList from './components/TaskList';
 import Calendar from './components/Calendar';
 
 function App() {
-    const [tasks, setTasks] = useState([
+    interface Task {
+        id: string|number;
+        title: string;
+        date: string;
+        time: number;
+    };
+
+    const [tasks, setTasks] = useState<Task[]>([
         {
             id: 'pn00la8- 1778687953108',
             title: 'Walk the dog',
@@ -15,25 +23,15 @@ function App() {
 
     return (
         <>
-            <main className="h-full lg:grid lg:grid-cols-12" role="main">
+            <main className="h-full lg:grid lg:grid-cols-12 text-left" role="main">
                 <aside className="lg:col-span-2 bg-green-500 p-5" role="contentinfo">
                     <h1 className="text-2xl text-white">Tracker<span className="font-bold">lee</span></h1>
                 </aside>
 
-                <div className="lg:col-span-10 w-full p-5">
-                    <header>
-                        <TaskInput tasks={tasks} setTasks={setTasks} />
-                    </header>
+                <div className="lg:col-span-10 w-full">
+                    <TaskInput tasks={tasks} setTasks={setTasks} />
 
-                    <ul>
-                        {tasks?.map((task: { id: string; title: string; date: string; time: number }) => {
-                            return (
-                                <li key={task.id}>
-                                    {task.title} / {task.date} / {task.time} <button>Edit</button>
-                                </li>
-                            )
-                        })}
-                    </ul>
+                    <TaskList tasks={tasks} />
 
                     {/* <Calendar /> */}
                 </div>
