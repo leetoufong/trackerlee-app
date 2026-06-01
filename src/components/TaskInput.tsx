@@ -11,12 +11,20 @@ const TaskInput = (props: any) => {
         event.preventDefault();
         
         if (currentTask.trim() && currentDate.trim() && currentTime.toString().trim()) {
+            console.log(currentTime)
             setTasks([...tasks, {id: `${Math.random().toString(36).slice(2, 9)}-${Date.now()}`, title: currentTask, date: currentDate, time: currentTime}]);
         }
 
         if (formRef.current) {
-            formRef.current.reset();
+            resetTasks();
         }
+    };
+
+    const resetTasks = () => {
+        formRef.current?.reset();
+        setCurrentTask('');
+        setCurrentDate('');
+        setCurrentTime(0);
     };
 
     const handleTimeConversion = (time: any) => {
@@ -32,30 +40,29 @@ const TaskInput = (props: any) => {
             minutes = minutes * 60 * 1000;
         }
 
-        console.log(hours, minutes);
-
         time = hours + minutes;
-        console.log(time)
 
         return time;
-    }
+    };
 
     return (
-        <form action="POST" onSubmit={handleSettingTasks} ref={formRef}>
-            <div>
-                <label htmlFor="title">Task Title:</label>
-                <input type="text" id="title" className="border p-2 rounded" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
-            </div>
-            <div>
-                <label htmlFor="date">Date Worked:</label>
-                <input type="date" id="date" className="border p-2 rounded" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
-            </div>
-            <div>
-                <label htmlFor="time">Amount Worked:</label>
-                <input type="text" id="time" className="border p-2 rounded" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
-            </div>
-            <button className="bg-green-500 text-white p-2 rounded font-bold" type="submit">Submit</button>
-        </form>
+        <section className="p-10">
+            <form action="POST" onSubmit={handleSettingTasks} ref={formRef}>
+                <div>
+                    <label htmlFor="title">Task Title:</label>
+                    <input type="text" id="title" className="border p-2 rounded" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
+                </div>
+                <div>
+                    <label htmlFor="date">Date Worked:</label>
+                    <input type="date" id="date" className="border p-2 rounded" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
+                </div>
+                <div>
+                    <label htmlFor="time">Amount Worked:</label>
+                    <input type="text" id="time" className="border p-2 rounded" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
+                </div>
+                <button className="bg-green-500 text-white p-2 rounded font-bold" type="submit" disabled={!currentTask || !currentDate || !currentTime}>Submit</button>
+            </form>
+        </section>
     )
 }
 
