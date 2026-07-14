@@ -1,4 +1,4 @@
-import { useState, useRef, FormEvent } from 'react';
+import { useState, useRef } from 'react';
 
 const TaskInput = (props: any) => {
     const {tasks, setTasks} = props;
@@ -7,11 +7,10 @@ const TaskInput = (props: any) => {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const handleTaskSubmit = (event: FormEvent<HTMLFormElement>) => {
+    const handleTaskSubmit = (event) => {
         event.preventDefault();
         
         if (currentTask.trim() && currentDate.trim() && currentTime.toString().trim()) {
-            console.log(currentTime)
             setTasks([...tasks, {id: `${Math.random().toString(36).slice(2, 9)}-${Date.now()}`, title: currentTask, date: currentDate, time: currentTime}]);
         }
 

@@ -14,7 +14,7 @@ function App() {
 
     const [tasks, setTasks] = useState<Task[]>([
         {
-            id: 'pn00la8- 1778687953108',
+            id: 'pn00la8-1778687953108',
             title: 'Walk the dog',
             date: '2026-05-03T00:00:00.000Z',
             time: 8100000
