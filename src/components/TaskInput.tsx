@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, FormEvent } from 'react';
 
 const TaskInput = (props: any) => {
     const {tasks, setTasks} = props;
@@ -7,7 +7,7 @@ const TaskInput = (props: any) => {
     const [currentTime, setCurrentTime] = useState<number>(0);
     const formRef = useRef<HTMLFormElement>(null);
 
-    const handleSettingTasks = (event: FormDataEvent) => {
+    const handleTaskSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         if (currentTask.trim() && currentDate.trim() && currentTime.toString().trim()) {
@@ -47,20 +47,22 @@ const TaskInput = (props: any) => {
 
     return (
         <section className="p-10">
-            <form action="POST" onSubmit={handleSettingTasks} ref={formRef}>
-                <div>
-                    <label htmlFor="title">Task Title:</label>
-                    <input type="text" id="title" className="border p-2 rounded" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
+            <form className="" action="POST" onSubmit={handleTaskSubmit} ref={formRef}>
+                <div className="flex flex-row">
+                    <div className="flex flex-col mr-4">
+                        <label htmlFor="title">Task Title:</label>
+                        <input type="text" id="title" className="border p-2 rounded" onChange={event => setCurrentTask(event.target.value)} placeholder="Task name" />
+                    </div>
+                    <div className="flex flex-col mr-4">
+                        <label htmlFor="date">Date Worked:</label>
+                        <input type="date" id="date" className="border p-2 rounded" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
+                    </div>
+                    <div className="flex flex-col">
+                        <label htmlFor="time">Amount Worked:</label>
+                        <input type="text" id="time" className="border p-2 rounded" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
+                    </div>
                 </div>
-                <div>
-                    <label htmlFor="date">Date Worked:</label>
-                    <input type="date" id="date" className="border p-2 rounded" onChange={event => setCurrentDate(new Date(event.target.value).toISOString())} />
-                </div>
-                <div>
-                    <label htmlFor="time">Amount Worked:</label>
-                    <input type="text" id="time" className="border p-2 rounded" onChange={event => setCurrentTime(handleTimeConversion(event.target.value))} placeholder="3h 30m" />
-                </div>
-                <button className="bg-green-500 text-white p-2 rounded font-bold" type="submit" disabled={!currentTask || !currentDate || !currentTime}>Submit</button>
+                <button type="submit" className="bg-blue-500 text-white p-2 rounded">Add Task</button>
             </form>
         </section>
     )
