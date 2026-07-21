@@ -1,22 +1,29 @@
 import { useState, useRef, type SubmitEvent } from 'react';
 
 interface CurrentTask {
-    id?: string;
+    id: string;
     name: string;
     date: string;
     time: number;
 }
 
 const TaskInput = (props: any) => {
-    const {tasks, setTasks} = props;
-    const [currentTask, setCurrentTask] = useState<CurrentTask>({name: '', date: '', time: 0});
+    const {addTask} = props;
+    const [currentTask, setCurrentTask] = useState<CurrentTask>({id: '', name: '', date: '', time: 0});
     const formRef = useRef<HTMLFormElement>(null);
 
     const handleTaskSubmit = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         
         if (currentTask.name.trim() && currentTask.date.trim() && currentTask.time.toString().trim()) {
-            setTasks([...tasks, {id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`, title: currentTask.name, date: currentTask.date, time: currentTask.time}]);
+            addTask(
+                {
+                    id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`,
+                    title: currentTask.name,
+                    date: currentTask.date,
+                    time: currentTask.time
+                }
+            )
         }
 
         if (formRef.current) {
@@ -26,7 +33,7 @@ const TaskInput = (props: any) => {
 
     const resetTasks = () => {
         formRef.current?.reset();
-        setCurrentTask({name: '', date: '', time: 0});
+        setCurrentTask({id: '', name: '', date: '', time: 0});
     };
 
     const handleTimeConversion = (time: any) => {

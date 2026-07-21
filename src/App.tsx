@@ -2,7 +2,6 @@ import { useState } from 'react'
 import './App.css'
 import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
-import Calendar from './components/Calendar';
 
 interface Task {
     id: string|number; // UUID of said task
@@ -21,6 +20,10 @@ function App() {
         }
     ]);
 
+    const addTask = (task: Task) => {
+        setTasks([...tasks, task]);
+    }
+
     return (
         <>
             <main className="h-full lg:grid lg:grid-cols-12 text-left" role="main">
@@ -29,9 +32,9 @@ function App() {
                 </aside>
 
                 <div className="lg:col-span-10 w-full">
-                    <TaskInput tasks={tasks} setTasks={setTasks} />
+                    <TaskInput addTask={addTask} />
 
-                    <TaskList tasks={tasks} />
+                    <TaskList taskList={tasks} />
 
                     {/* <Calendar /> */}
                 </div>
