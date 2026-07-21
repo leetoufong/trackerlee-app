@@ -10,7 +10,6 @@ interface TaskListProps {
 }
 
 const TaskList = ({taskList}: TaskListProps) => {
-    
     return (
         <section className="p-10">
             <ul className="[&>:not(:first-child)]:mt-3">
