@@ -5,10 +5,10 @@ import TaskList from './components/TaskList';
 import Calendar from './components/Calendar';
 
 interface Task {
-    id: string|number;
-    title: string;
-    date: string;
-    time: number;
+    id: string|number; // UUID of said task
+    title: string; // Name/Title of task
+    date: string; // Date task was completed
+    time: number; // Amount of time task was worked on
 };
 
 function App() {
