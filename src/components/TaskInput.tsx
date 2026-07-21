@@ -1,6 +1,7 @@
 import { useState, useRef, type SubmitEvent } from 'react';
 
 interface CurrentTask {
+    id?: string;
     name: string;
     date: string;
     time: number;

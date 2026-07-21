@@ -1,10 +1,20 @@
-const TaskList = (props: {tasks: Object}) => {
-    const { tasks } = props;
+interface Task {
+    id?: string;
+    name: string;
+    date: string;
+    time: number;
+}
 
+interface TaskListProps {
+    tasks: Task[];
+}
+
+const TaskList = ({tasks}: TaskListProps) => {
+    
     return (
         <section className="p-10">
             <ul className="[&>:not(:first-child)]:mt-3">
-                {tasks?.map((task: {title: string, date: string, time: number}) => {
+                {tasks?.map((task) => {
                     const date = task.date.split('T')[0].split('-');
                     const formattedDate = `${date[1]}/${date[2]}/${date[0]}`;
                     const hours = Math.floor(task.time / (1000 * 60 * 60));
