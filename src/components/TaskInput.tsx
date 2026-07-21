@@ -15,7 +15,7 @@ const TaskInput = (props: any) => {
         event.preventDefault();
         
         if (currentTask.name.trim() && currentTask.date.trim() && currentTask.time.toString().trim()) {
-            setTasks([...tasks, {id: `${Math.random().toString(36).slice(2, 9)}-${Date.now()}`, title: currentTask.name, date: currentTask.date, time: currentTask.time}]);
+            setTasks([...tasks, {id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`, title: currentTask.name, date: currentTask.date, time: currentTask.time}]);
         }
 
         if (formRef.current) {
