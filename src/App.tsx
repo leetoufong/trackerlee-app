@@ -4,14 +4,14 @@ import TaskInput from './components/TaskInput';
 import TaskList from './components/TaskList';
 import Calendar from './components/Calendar';
 
-function App() {
-    interface Task {
-        id: string|number;
-        title: string;
-        date: string;
-        time: number;
-    };
+interface Task {
+    id: string|number;
+    title: string;
+    date: string;
+    time: number;
+};
 
+function App() {
     const [tasks, setTasks] = useState<Task[]>([
         {
             id: 'pn00la8-1778687953108',
