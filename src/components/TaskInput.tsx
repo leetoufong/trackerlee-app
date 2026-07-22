@@ -3,50 +3,52 @@ import Button from './Button';
 
 interface Task {
     id: string;
-    name: string;
+    title: string;
     date: string;
     time: number;
 }
 
 const TaskInput = (props: any) => {
     const {handleAddTask} = props;
-    const [currentTask, setCurrentTask] = useState<Task>({id: '', name: '', date: '', time: 0});
+    const [currentTask, setCurrentTask] = useState<Task>({id: '', title: '', date: '', time: 0});
     const formRef = useRef<HTMLFormElement>(null);
 
     const handleSubmitTask = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         
-        if (currentTask.name.trim() || currentTask.date.trim() || currentTask.time.toString().trim()) {
+        if (currentTask.title.trim() && currentTask.date.trim() && currentTask.time > 0) {
             handleAddTask(
                 {
                     id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`,
-                    title: currentTask.name,
+                    title: currentTask.title,
                     date: currentTask.date,
                     time: currentTask.time
                 }
-            )
-        }
+            );
 
-        if (formRef.current) {
             resetTasks();
         }
     };
 
     const resetTasks = () => {
         formRef.current?.reset();
-        setCurrentTask({id: '', name: '', date: '', time: 0});
+        setCurrentTask({id: '', title: '', date: '', time: 0});
     };
 
     const handleTimeConversion = (time: any) => {
         time = time.split(' ');
-        let hours = 0;
-        let minutes = 0;
+        let hours: number = 0;
+        let minutes: number = 0;
 
-        hours = parseInt(time[0].replace(/\D/g, ""));
-        hours = hours * 60 * 60 * 1000;
+        let hourTicker = time.filter((ticker: string) => ticker.includes('h'));
+        let minuteTicker = time.filter((ticker: string) => ticker.includes('m'));
 
-        if (time.length > 1) {
-            minutes = parseInt(time[1].replace(/\D/g, ""));
+        if (hourTicker.length) {
+            hours = parseInt(hourTicker) * 60 * 60 * 1000;
+        }
+
+        if (minuteTicker.length) {
+            minutes = parseInt(minuteTicker);
             minutes = minutes * 60 * 1000;
         }
 
@@ -64,7 +66,7 @@ const TaskInput = (props: any) => {
                         <input type="text" id="title" className="border p-2 rounded" onChange={(event) => {
                             setCurrentTask((prevTask) => ({
                                 ...prevTask,
-                                name: event.target.value
+                                title: event.target.value
                             }));
                         }} placeholder="Task name" />
                     </div>
