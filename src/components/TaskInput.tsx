@@ -1,6 +1,7 @@
 import { useState, useRef, type SubmitEvent } from 'react';
+import Button from './Button';
 
-interface CurrentTask {
+interface Task {
     id: string;
     name: string;
     date: string;
@@ -9,13 +10,13 @@ interface CurrentTask {
 
 const TaskInput = (props: any) => {
     const {addTask} = props;
-    const [currentTask, setCurrentTask] = useState<CurrentTask>({id: '', name: '', date: '', time: 0});
+    const [currentTask, setCurrentTask] = useState<Task>({id: '', name: '', date: '', time: 0});
     const formRef = useRef<HTMLFormElement>(null);
 
-    const handleTaskSubmit = (event: SubmitEvent<HTMLFormElement>) => {
+    const handleSubmitTask = (event: SubmitEvent<HTMLFormElement>) => {
         event.preventDefault();
         
-        if (currentTask.name.trim() && currentTask.date.trim() && currentTask.time.toString().trim()) {
+        if (currentTask.name.trim() || currentTask.date.trim() || currentTask.time.toString().trim()) {
             addTask(
                 {
                     id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`,
@@ -56,7 +57,7 @@ const TaskInput = (props: any) => {
 
     return (
         <section className="p-10">
-            <form className="" action="POST" onSubmit={handleTaskSubmit} ref={formRef}>
+            <form className="" action="POST" onSubmit={handleSubmitTask} ref={formRef}>
                 <div className="flex flex-row">
                     <div className="flex flex-col mr-4">
                         <label htmlFor="title">Task Title:</label>
@@ -86,7 +87,8 @@ const TaskInput = (props: any) => {
                         }} placeholder="3h 30m" />
                     </div>
                 </div>
-                <button type="submit" className="bg-blue-500 text-white p-2 rounded">Add Task</button>
+
+                <Button type="submit">Add Task</Button>
             </form>
         </section>
     )
