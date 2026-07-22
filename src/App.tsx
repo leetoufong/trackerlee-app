@@ -20,8 +20,8 @@ function App() {
         }
     ]);
 
-    const addTask = (task: Task) => {
-        setTasks([...tasks, task]);
+    const handleAddTask = (task: Task) => {
+        if (task) setTasks([...tasks, task]);
     }
 
     return (
@@ -32,7 +32,7 @@ function App() {
                 </aside>
 
                 <div className="lg:col-span-10 w-full">
-                    <TaskInput addTask={addTask} />
+                    <TaskInput handleAddTask={handleAddTask} />
 
                     <TaskList taskList={tasks} />
 

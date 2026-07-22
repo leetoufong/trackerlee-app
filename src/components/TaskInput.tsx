@@ -9,7 +9,7 @@ interface Task {
 }
 
 const TaskInput = (props: any) => {
-    const {addTask} = props;
+    const {handleAddTask} = props;
     const [currentTask, setCurrentTask] = useState<Task>({id: '', name: '', date: '', time: 0});
     const formRef = useRef<HTMLFormElement>(null);
 
@@ -17,7 +17,7 @@ const TaskInput = (props: any) => {
         event.preventDefault();
         
         if (currentTask.name.trim() || currentTask.date.trim() || currentTask.time.toString().trim()) {
-            addTask(
+            handleAddTask(
                 {
                     id: `${Math.random().toString(36).slice(2, 9)}${Date.now()}`,
                     title: currentTask.name,
